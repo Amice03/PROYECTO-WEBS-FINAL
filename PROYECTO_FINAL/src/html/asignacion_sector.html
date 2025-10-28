@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración - Asignación de Sector</title>
+    <link rel="stylesheet" href="../css/asignacion_sector.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="color-band-top"></div>
+    
+    <div id="app-container" class="app-container">
+        
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-wrapper-sidebar">
+                    <h2 class="logo-text-sidebar">SaludRural</h2>
+                    <span class="logo-firma-sidebar">Conecta</span>
+                </div>
+                <button id="toggle-sidebar" class="toggle-button" aria-label="Colapsar menú">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item"><i class="fas fa-user-plus"></i> <span class="nav-text">Registrar Personal</span></a>
+                <a href="#" class="nav-item active"><i class="fas fa-map-marked-alt"></i> <span class="nav-text">Asignar Sector</span></a>
+                <a href="#" class="nav-item"><i class="fas fa-chart-bar"></i> <span class="nav-text">Ver Estadísticas</span></a>
+            </nav>
+            
+            <div class="user-profile-wrapper">
+                <div class="user-profile">
+                    <div class="profile-info">
+                        <i class="fas fa-user-circle profile-picture-icon"></i> 
+                        <div class="profile-details">
+                            <span class="profile-name">J. Pérez (Admin)</span>
+                            <span class="profile-role">Administrador EPN</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="logout-button"><i class="fas fa-sign-out-alt"></i> <span class="nav-text">Cerrar Sesión</span></a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Asignación Geográfica de Personal</h1>
+                <p>Establezca la jerarquía de área y use el mapa para seleccionar barrios/comunidades y asignar encuestadores.</p>
+            </header>
+            
+            <div class="card assignment-card">
+                <form class="assignment-form">
+                    
+                    <h2 class="form-section-title"><i class="fas fa-globe-americas"></i> 1. Selección Geográfica y Mapa</h2>
+                    
+                    <div class="map-assignment-grid">
+                        
+                        <div class="geo-select-column">
+                            <div class="input-group"><label for="provincia">Provincia <span class="required">*</span></label>
+                                <select id="provincia" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="Pichincha">Pichincha</option>
+                                    <option value="Guayas">Guayas</option>
+                                </select>
+                            </div>
+
+                            <div class="input-group"><label for="canton">Cantón <span class="required">*</span></label>
+                                <select id="canton" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="Quito">Quito</option>
+                                    <option value="Guayaquil">Guayaquil</option>
+                                </select>
+                            </div>
+                            
+                            <div class="input-group"><label for="parroquia">Parroquia <span class="required">*</span></label>
+                                <select id="parroquia" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="Calderon">Calderón</option>
+                                    <option value="Pomasqui">Pomasqui</option>
+                                </select>
+                            </div>
+                             
+                            <div class="input-group">
+                                <label for="barrio_manual">Barrio/Comunidad (Confirmación) <span class="required">*</span></label>
+                                <input type="text" id="barrio_manual" placeholder="Escriba el nombre confirmado" required>
+                            </div>
+                        </div>
+
+                        <div class="map-placeholder-column">
+                            <h3 class="map-title">Mapa de Parroquia / Selección de Barrios</h3>
+                            <div class="map-box">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <p>Visualización del área de la Parroquia seleccionada.</p>
+                                <p>**(Simulación de mapa interactivo de Ecuador)**</p>
+                            </div>
+                            <span class="map-hint">El sistema sugerirá comunidades disponibles en esta Parroquia.</span>
+                        </div>
+                    </div>
+                    
+                    <hr>
+
+                    <h2 class="form-section-title"><i class="fas fa-users"></i> 2. Asignación de Personal</h2>
+                    <p class="assignment-info">Asigne al equipo responsable de realizar la encuesta en el **Barrio/Comunidad** seleccionado.</p>
+                    
+                    <div class="form-grid">
+                        <div class="input-group full-width">
+                            <label for="encuestador_principal">Encuestador Principal (MSP o MIESS) <span class="required">*</span></label>
+                            <select id="encuestador_principal" required>
+                                <option value="">Seleccione Encuestador Principal</option>
+                                <option value="MROJAS_MSP">M. Rojas (MSP)</option>
+                                <option value="JLEMA_MIESS">J. Lema (MIESS)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group full-width">
+                            <label for="encuestadores_secundarios">Encuestadores de Apoyo (Múltiple)</label>
+                            <select id="encuestadores_secundarios" multiple size="4">
+                                <option value="APEREZ_MSP">A. Pérez (MSP)</option>
+                                <option value="CQUIROZ_MIESS">C. Quiroz (MIESS)</option>
+                                <option value="RGUAMAN_MSP">R. Guamán (MSP)</option>
+                                <option value="VVELEZ_MIESS">V. Vélez (MIESS)</option>
+                            </select>
+                            <span class="hint">Mantenga Ctrl o Cmd para seleccionar múltiples.</span>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button type="submit" class="button primary-button"><i class="fas fa-save"></i> Asignar Sector</button>
+                        <button type="reset" class="button secondary-button">Limpiar</button>
+                    </div>
+
+                </form>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const appContainer = document.getElementById('app-container');
+            const toggleButton = document.getElementById('toggle-sidebar');
+            
+            toggleButton.addEventListener('click', function() {
+                appContainer.classList.toggle('sidebar-collapsed');
+                const icon = this.querySelector('i');
+                if (appContainer.classList.contains('sidebar-collapsed')) {
+                    icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+                } else {
+                    icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
