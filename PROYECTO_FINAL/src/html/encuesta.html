@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuestador - Ingreso de Datos</title>
+    <link rel="stylesheet" href="../css/encuesta.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="color-band-top"></div>
+    
+    <div id="app-container" class="app-container">
+        
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-wrapper-sidebar">
+                    <h2 class="logo-text-sidebar">SaludRural</h2>
+                    <span class="logo-firma-sidebar">Conecta</span>
+                </div>
+                <button id="toggle-sidebar" class="toggle-button" aria-label="Colapsar menú">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active"><i class="fas fa-file-alt"></i> <span class="nav-text">Nueva Encuesta</span></a>
+            </nav>
+            
+            <div class="user-profile-wrapper">
+                <div class="user-profile">
+                    <div class="profile-info">
+                        <i class="fas fa-user-circle profile-picture-icon"></i>
+                        <div class="profile-details">
+                            <span class="profile-name">M. Rojas (Enc)</span>
+                            <span class="profile-role">Encuestador MSP</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="logout-button"><i class="fas fa-sign-out-alt"></i> <span class="nav-text">Cerrar Sesión</span></a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Nueva Encuesta y Censo Rural</h1>
+                <p>Complete los datos demográficos y de salud del habitante de la comunidad. *Cada envío genera un PDF de registro.</p>
+            </header>
+            
+            <div class="card survey-card">
+                <form class="survey-form">
+                    
+                    <div class="form-section active" data-step="1">
+                        <h2 class="form-section-title"><i class="fas fa-search"></i> 1. Identificación del Paciente</h2>
+                        <p class="search-info">Ingrese la cédula para buscar un paciente existente o registrar uno nuevo.</p>
+                        <div class="form-grid search-grid">
+                            <div class="input-group">
+                                <label for="cedula_paciente">Cédula del Paciente <span class="required">*</span></label>
+                                <input type="text" id="cedula_paciente" placeholder="Ej: 1700000000" required>
+                            </div>
+                            <button type="button" class="button secondary-button search-button" id="search-button"><i class="fas fa-search"></i> Buscar Paciente</button>
+                        </div>
+                        <div class="search-result-message" id="search-message"></div>
+                    </div>
+
+                    <div class="form-section" data-step="2">
+                        <h2 class="form-section-title"><i class="fas fa-user"></i> 2. Datos Demográficos (Censo)</h2>
+                        <div class="form-grid">
+                            <div class="input-group"><label for="nombres_paciente">Nombres <span class="required">*</span></label><input type="text" id="nombres_paciente" required></div>
+                            <div class="input-group"><label for="apellidos_paciente">Apellidos <span class="required">*</span></label><input type="text" id="apellidos_paciente" required></div>
+                            <div class="input-group"><label for="fecha_nac">Fecha de Nacimiento <span class="required">*</span></label><input type="date" id="fecha_nac" required></div>
+                            <div class="input-group"><label for="genero">Género <span class="required">*</span></label>
+                                <select id="genero" required>
+                                    <option value="">Seleccione</option>
+                                    <option value="M">Masculino</option>
+                                    <option value="F">Femenino</option>
+                                    <option value="O">Otro</option>
+                                </select>
+                            </div>
+                            <div class="input-group"><label for="telefono_paciente">Teléfono</label><input type="tel" id="telefono_paciente" placeholder="Ej: 0987654321"></div>
+                            <div class="input-group"><label for="estado_civil">Estado Civil</label>
+                                <select id="estado_civil">
+                                    <option value="">Seleccione</option>
+                                    <option value="S">Soltero(a)</option>
+                                    <option value="C">Casado(a)</option>
+                                    <option value="U">Unión Libre</option>
+                                    <option value="D">Divorciado(a)</option>
+                                    <option value="V">Viudo(a)</option>
+                                </select>
+                            </div>
+                            <div class="input-group full-width"><label for="direccion_actual">Dirección (Comunidad y Sector)</label><input type="text" id="direccion_actual" placeholder="Nombre de la comunidad y dirección exacta del domicilio"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-section" data-step="3">
+                        <h2 class="form-section-title"><i class="fas fa-history"></i> 3. Historial Médico Base</h2>
+                        <div class="form-grid">
+                            <div class="input-group full-width">
+                                <label for="enfermedades_previas">Enfermedades Preexistentes/Crónicas</label>
+                                <textarea id="enfermedades_previas" rows="2" placeholder="Describa otras condiciones si aplica..."></textarea>
+                                </div>
+                            
+                            <div class="input-group"><label for="cirugias_previas_select">¿Tuvo Cirugías Previas?</label>
+                                <select id="cirugias_previas_select" onchange="toggleDetail('cirugias_detalle', this.value)">
+                                    <option value="No">No</option>
+                                    <option value="Si">Sí</option>
+                                </select>
+                            </div>
+                            <div class="input-group" id="cirugias_detalle" style="display:none;">
+                                <label for="cirugias_previas_text">Detalle Cirugías</label>
+                                <input type="text" id="cirugias_previas_text" placeholder="Ej: Apendicectomía, 2018">
+                            </div>
+                            
+                            <div class="input-group"><label for="hospitalizaciones_select">¿Tuvo Hospitalizaciones Previas?</label>
+                                <select id="hospitalizaciones_select" onchange="toggleDetail('hospitalizaciones_detalle', this.value)">
+                                    <option value="No">No</option>
+                                    <option value="Si">Sí</option>
+                                </select>
+                            </div>
+                            <div class="input-group" id="hospitalizaciones_detalle" style="display:none;">
+                                <label for="hospitalizaciones_text">Detalle Hospitalizaciones</label>
+                                <input type="text" id="hospitalizaciones_text" placeholder="Fecha y causa más reciente">
+                            </div>
+                            
+                            <div class="input-group full-width"><label for="alergias_select">¿Tiene Alergias Conocidas?</label>
+                                <select id="alergias_select" onchange="toggleDetail('alergias_detalle', this.value)">
+                                    <option value="No">No</option>
+                                    <option value="Si">Sí</option>
+                                </select>
+                            </div>
+                            <div class="input-group full-width" id="alergias_detalle" style="display:none;">
+                                <label for="alergias_text">Detalle Alergias</label>
+                                <textarea id="alergias_text" rows="2" placeholder="Ej: Penicilina, mariscos, polen..."></textarea>
+                            </div>
+                            
+                            <div class="input-group full-width">
+                                <label for="medicacion_actual">Medicación Crónica Actual (Descripción Libre)</label>
+                                <textarea id="medicacion_actual" rows="2" placeholder="Nombre del medicamento, dosis y frecuencia"></textarea>
+                            </div>
+                            <div class="input-group full-width">
+                                <label for="antecedentes_familiares">Antecedentes Familiares Relevantes (Descripción Libre)</label>
+                                <textarea id="antecedentes_familiares" rows="2" placeholder="Diabetes, cáncer, hipertensión en familiares directos."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section" data-step="4">
+                        <h2 class="form-section-title"><i class="fas fa-stethoscope"></i> 4. Signos Vitales y Triage</h2>
+                        <div class="form-grid">
+                            <div class="input-group"><label for="peso">Peso (kg)</label><input type="number" id="peso" step="0.1" min="0" placeholder="Ej: 75.5"></div>
+                            <div class="input-group"><label for="altura">Altura (cm)</label><input type="number" id="altura" min="0" placeholder="Ej: 170"></div>
+                            <div class="input-group"><label for="presion_arterial">Presión Arterial (mm/Hg)</label><input type="text" id="presion_arterial" placeholder="Ej: 120/80"></div>
+                            <div class="input-group"><label for="temperatura">Temperatura (°C)</label><input type="number" id="temperatura" step="0.1" placeholder="Ej: 36.5"></div>
+                            <div class="input-group"><label for="frecuencia_cardiaca">Frecuencia Cardíaca (lpm)</label><input type="number" id="frecuencia_cardiaca" min="0" placeholder="Ej: 72"></div>
+                            <div class="input-group"><label for="saturacion">Saturación de O₂ (%)</label><input type="number" id="saturacion" min="0" max="100" placeholder="Ej: 98"></div>
+                            <div class="input-group"><label for="glicemia">Glicemia (mg/dL) - Opcional</label><input type="number" id="glicemia" min="0" placeholder="Ej: 90"></div>
+                            <div class="input-group full-width">
+                                <label for="sintomas_actuales">Síntomas Reportados Hoy <span class="required">*</span></label>
+                                <textarea id="sintomas_actuales" rows="3" placeholder="Síntomas actuales o motivo de la visita." required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section" data-step="5">
+                        <h2 class="form-section-title"><i class="fas fa-leaf"></i> 5. Hábitos y Entorno de Salud</h2>
+                        <div class="form-grid">
+                            <div class="input-group">
+                                <label for="tabaquismo">Tabaquismo</label>
+                                <select id="tabaquismo">
+                                    <option value="No">No</option>
+                                    <option value="Ex">Ex-fumador</option>
+                                    <option value="Si">Sí</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="alcohol">Consumo de Alcohol</label>
+                                <select id="alcohol">
+                                    <option value="No">No</option>
+                                    <option value="Social">Social</option>
+                                    <option value="Frecuente">Frecuente</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="agua_consumida">Fuente de Agua</label>
+                                <select id="agua_consumida">
+                                    <option value="Potable">Red Pública (Potable)</option>
+                                    <option value="Pozo">Pozo</option>
+                                    <option value="Rio">Río/Vertiente</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="desecho">Manejo de Desechos</label>
+                                <select id="desecho">
+                                    <option value="Recoleccion">Recolección Municipal</option>
+                                    <option value="Quema">Quema/Entierro</option>
+                                    <option value="Abierto">Cielo Abierto</option>
+                                </select>
+                            </div>
+                            <div class="input-group full-width">
+                                <label for="observaciones">Observaciones de la Visita/Entorno</label>
+                                <textarea id="observaciones" rows="3" placeholder="Notas sobre el entorno social, ambiental o familiar."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr>
+
+                    <div class="action-buttons form-navigation">
+                        <button type="button" class="button secondary-button" id="prev-step" style="display:none;"><i class="fas fa-arrow-left"></i> Anterior</button>
+                        <button type="button" class="button primary-button" id="next-step" style="display:none;">Siguiente <i class="fas fa-arrow-right"></i></button>
+                        <button type="submit" class="button primary-button" id="submit-form" style="display:none;"><i class="fas fa-paper-plane"></i> Finalizar y Generar PDF</button>
+                    </div>
+
+                </form>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // Función para mostrar/ocultar campos de detalle (Sí/No)
+        function toggleDetail(id, value) {
+            const element = document.getElementById(id);
+            if (value === 'Si') {
+                element.style.display = 'flex';
+                // Opcional: podrías hacer que el input de detalle sea requerido aquí
+            } else {
+                element.style.display = 'none';
+                // Opcional: podrías limpiar o quitar el atributo required si existiera
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Colapso del Sidebar
+            const appContainer = document.getElementById('app-container');
+            const toggleButton = document.getElementById('toggle-sidebar');
+
+            toggleButton.addEventListener('click', function() {
+                appContainer.classList.toggle('sidebar-collapsed');
+                const icon = this.querySelector('i');
+                if (appContainer.classList.contains('sidebar-collapsed')) {
+                    icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+                } else {
+                    icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+                }
+            });
+            
+            // 2. Navegación del Formulario por Pasos (Encuesta)
+            const sections = document.querySelectorAll('.form-section');
+            const prevButton = document.getElementById('prev-step');
+            const nextButton = document.getElementById('next-step');
+            const submitButton = document.getElementById('submit-form');
+            const searchButton = document.getElementById('search-button');
+            const searchMessage = document.getElementById('search-message');
+            const cedulaInput = document.getElementById('cedula_paciente');
+            
+            let currentStep = 1;
+
+            function updateFormVisibility() {
+                sections.forEach(section => {
+                    section.style.display = 'none';
+                });
+                document.querySelector(`[data-step="${currentStep}"]`).style.display = 'block';
+
+                
+                prevButton.style.display = currentStep > 1 ? 'inline-flex' : 'none';
+                
+                // Lógica de botones para los pasos de la encuesta
+                if (currentStep === 1) {
+                    nextButton.style.display = 'none';
+                    submitButton.style.display = 'none';
+                    searchButton.style.display = 'inline-flex';
+                    searchMessage.style.display = 'block';
+                } else {
+                    searchButton.style.display = 'none';
+                    searchMessage.style.display = 'none';
+                    nextButton.style.display = currentStep < sections.length ? 'inline-flex' : 'none';
+                    submitButton.style.display = currentStep === sections.length ? 'inline-flex' : 'none';
+                }
+            }
+
+            // SIMULACIÓN DE BÚSQUEDA
+            searchButton.addEventListener('click', () => {
+                const cedula = cedulaInput.value.trim();
+                searchMessage.style.border = '1px solid var(--color-border-light)';
+
+                if (cedula.length === 10) {
+                    if (cedula.endsWith('1234')) {
+                        searchMessage.innerHTML = '<i class="fas fa-check-circle"></i> Paciente encontrado. ¡Datos listos para actualizar!';
+                        searchMessage.style.backgroundColor = 'rgba(26, 188, 156, 0.1)';
+                        searchMessage.style.color = 'var(--color-health-green)';
+                    } else {
+                        searchMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i> Paciente nuevo. Iniciando **Nuevo Registro** de Censo.';
+                        searchMessage.style.backgroundColor = 'rgba(0, 119, 194, 0.1)';
+                        searchMessage.style.color = 'var(--color-primary-blue)';
+                    }
+                    nextButton.style.display = 'inline-flex'; 
+                    setTimeout(() => {
+                        currentStep++;
+                        updateFormVisibility();
+                    }, 1000);
+                } else {
+                    searchMessage.innerHTML = '<i class="fas fa-times-circle"></i> Ingrese una cédula válida de 10 dígitos.';
+                    searchMessage.style.backgroundColor = 'rgba(218, 41, 28, 0.1)';
+                    searchMessage.style.color = 'var(--color-ecuador-red)';
+                    nextButton.style.display = 'none';
+                }
+            });
+            
+            nextButton.addEventListener('click', () => {
+                const currentSectionInputs = document.querySelector(`[data-step="${currentStep}"]`).querySelectorAll('input[required], select[required], textarea[required]');
+                let allValid = true;
+                currentSectionInputs.forEach(input => {
+                    if (!input.value) {
+                        allValid = false;
+                        input.style.border = '2px solid var(--color-ecuador-red)';
+                    } else {
+                        input.style.border = '1px solid var(--color-border-light)';
+                    }
+                });
+                
+                if (allValid && currentStep < sections.length) {
+                    currentStep++;
+                    updateFormVisibility();
+                } else if (!allValid) {
+                    alert('Por favor, complete todos los campos requeridos (*).');
+                }
+            });
+
+            prevButton.addEventListener('click', () => {
+                if (currentStep > 1) {
+                    currentStep--;
+                    updateFormVisibility();
+                }
+            });
+
+            updateFormVisibility();
+        });
+    </script>
+</body>
+</html>
