@@ -33,4 +33,4 @@ Tecnologías utilizadas
 ⦁	Base de datos: SQLite (para almacenamiento local)
 ⦁	Otras herramientas: Node.js, Express.js (para la lógica del servidor cuando hay conexión)
 
-MICA TE AMO
+MICA TE AMO.
