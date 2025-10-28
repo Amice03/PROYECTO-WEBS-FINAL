@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triage - Lista de Prioridad de Pacientes</title>
+    <link rel="stylesheet" href="../css/triage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="color-band-top"></div>
+    
+    <div id="app-container" class="app-container">
+        
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-wrapper-sidebar">
+                    <h2 class="logo-text-sidebar">SaludRural</h2>
+                    <span class="logo-firma-sidebar">Conecta</span>
+                </div>
+                <button id="toggle-sidebar" class="toggle-button" aria-label="Colapsar menú">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item"><i class="fas fa-file-alt"></i> <span class="nav-text">Nueva Encuesta</span></a>
+                <a href="#" class="nav-item"><i class="fas fa-notes-medical"></i> <span class="nav-text">Historial Médico</span></a>
+                <a href="#" class="nav-item active"><i class="fas fa-user-check"></i> <span class="nav-text">Triage de Paciente</span></a>
+                <a href="#" class="nav-item"><i class="fas fa-chart-line"></i> <span class="nav-text">Seguimiento de Avance</span></a>
+            </nav>
+            
+            <div class="user-profile-wrapper">
+                <div class="user-profile">
+                    <div class="profile-info">
+                        <i class="fas fa-user-circle profile-picture-icon"></i>
+                        <div class="profile-details">
+                            <span class="profile-name">J. Pérez (Admin)</span>
+                            <span class="profile-role">Administrador EPN</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="logout-button"><i class="fas fa-sign-out-alt"></i> <span class="nav-text">Cerrar Sesión</span></a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Dashboard de Prioridad (Triage)</h1>
+                <p>Lista general de pacientes ordenada por nivel de riesgo (el más crítico al inicio). Última actualización: 2025-10-21.</p>
+            </header>
+            
+            <div class="card triage-list-card">
+                
+                <div class="triage-list-header">
+                    <div class="col-risk">PRIORIDAD</div>
+                    <div class="col-patient">PACIENTE / COMUNIDAD</div>
+                    <div class="col-vitals">RIESGO CLAVE</div>
+                    <div class="col-frequency">PRÓXIMO REQUERIDO</div>
+                </div>
+
+                <div class="triage-list-body">
+                    
+                    <div class="triage-item danger" data-id="1" onclick="alert('Ver historial de paciente 1705678901')">
+                        <div class="col-risk"><i class="fas fa-exclamation-triangle"></i> **Rojo**</div>
+                        <div class="col-patient">
+                            <strong>María Fernanda Guamán</strong><br>
+                            <span class="community">Comunidad El Cisne</span>
+                        </div>
+                        <div class="col-vitals">
+                            <span class="vital-label">P: 145/95</span> |
+                            <span class="vital-label">G: 180</span>
+                        </div>
+                        <div class="col-frequency">1 Mes</div>
+                    </div>
+                    
+                    <div class="triage-item danger" data-id="2" onclick="alert('Ver historial de paciente 1701122334')">
+                        <div class="col-risk"><i class="fas fa-exclamation-triangle"></i> **Rojo**</div>
+                        <div class="col-patient">
+                            <strong>Roberto Carlos Morales</strong><br>
+                            <span class="community">Comunidad San Juan</span>
+                        </div>
+                        <div class="col-vitals">
+                            <span class="vital-label">T: 38.5°C</span> | 
+                            <span class="vital-label">S: 90%</span>
+                        </div>
+                        <div class="col-frequency">1 Semana</div>
+                    </div>
+
+                    <div class="triage-item warning-yellow" data-id="3" onclick="alert('Ver historial de paciente 1709876543')">
+                        <div class="col-risk"><i class="fas fa-exclamation"></i> **Amarillo**</div>
+                        <div class="col-patient">
+                            <strong>Ana Belén Vásquez</strong><br>
+                            <span class="community">Sector Central</span>
+                        </div>
+                        <div class="col-vitals">
+                            <span class="vital-label">P: 135/85</span>
+                        </div>
+                        <div class="col-frequency">3 Meses</div>
+                    </div>
+                    
+                    <div class="triage-item success" data-id="4" onclick="alert('Ver historial de paciente 1704455667')">
+                        <div class="col-risk"><i class="fas fa-check-circle"></i> **Verde**</div>
+                        <div class="col-patient">
+                            <strong>Pedro Antonio Lema</strong><br>
+                            <span class="community">Comunidad El Cisne</span>
+                        </div>
+                        <div class="col-vitals">
+                            <span class="vital-label">P: 120/80</span>
+                        </div>
+                        <div class="col-frequency">6 Meses</div>
+                    </div>
+                    
+                    <div class="triage-item success" data-id="5" onclick="alert('Ver historial de paciente 1708899000')">
+                        <div class="col-risk"><i class="fas fa-check-circle"></i> **Verde**</div>
+                        <div class="col-patient">
+                            <strong>Luisa Fernanda Pico</strong><br>
+                            <span class="community">Comunidad La Merced</span>
+                        </div>
+                        <div class="col-vitals">
+                            <span class="vital-label">G: 95</span>
+                        </div>
+                        <div class="col-frequency">6 Meses</div>
+                    </div>
+                    
+                </div>
+                
+                <div class="triage-list-footer">
+                    <p>Total de pacientes en el censo: 5</p>
+                    <a href="#"><i class="fas fa-filter"></i> Filtrar por Comunidad o Condición</a>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const appContainer = document.getElementById('app-container');
+            const toggleButton = document.getElementById('toggle-sidebar');
+            
+            toggleButton.addEventListener('click', function() {
+                appContainer.classList.toggle('sidebar-collapsed');
+                const icon = this.querySelector('i');
+                if (appContainer.classList.contains('sidebar-collapsed')) {
+                    icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+                } else {
+                    icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

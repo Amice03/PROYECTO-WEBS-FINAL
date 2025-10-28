@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial Médico - SaludRural</title>
+    <link rel="stylesheet" href="../css/historial_medico.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="color-band-top"></div>
+    
+    <div id="app-container" class="app-container">
+        
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-wrapper-sidebar">
+                    <h2 class="logo-text-sidebar">SaludRural</h2>
+                    <span class="logo-firma-sidebar">Conecta</span>
+                </div>
+                <button id="toggle-sidebar" class="toggle-button" aria-label="Colapsar menú">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item"><i class="fas fa-file-alt"></i> <span class="nav-text">Nueva Encuesta</span></a>
+                <a href="#" class="nav-item active"><i class="fas fa-notes-medical"></i> <span class="nav-text">Historial Médico</span></a>
+                <a href="#" class="nav-item"><i class="fas fa-user-check"></i> <span class="nav-text">Triage de Paciente</span></a>
+                <a href="#" class="nav-item"><i class="fas fa-chart-line"></i> <span class="nav-text">Seguimiento de Avance</span></a>
+            </nav>
+            
+            <div class="user-profile-wrapper">
+                <div class="user-profile">
+                    <div class="profile-info">
+                        <i class="fas fa-user-circle profile-picture-icon"></i>
+                        <div class="profile-details">
+                            <span class="profile-name">J. Pérez (Admin)</span>
+                            <span class="profile-role">Administrador EPN</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="logout-button"><i class="fas fa-sign-out-alt"></i> <span class="nav-text">Cerrar Sesión</span></a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Historial Clínico del Paciente</h1>
+                <p>Muestra el resumen de los datos más recientes y la cronología de visitas.</p>
+            </header>
+            
+            <div class="patient-search-section card">
+                <h2 class="section-header"><i class="fas fa-search"></i> Búsqueda de Paciente / Censo</h2>
+                
+                <div class="input-group full-width" style="margin-bottom: 15px;">
+                    <label for="search_type">Tipo de Búsqueda</label>
+                    <select id="search_type" onchange="toggleSearchMode(this.value)">
+                        <option value="individual">Individual (Cédula/Nombre)</option>
+                        <option value="geografica">Geográfica (Provincia/Sector)</option>
+                    </select>
+                </div>
+
+                <div id="search-mode-individual" class="search-mode">
+                    <div class="search-grid form-grid">
+                        <div class="input-group">
+                            <label for="search_input">Cédula o Nombre del Paciente</label>
+                            <input type="text" id="search_input" placeholder="Ej: 1705678901 o María Guamán">
+                        </div>
+                        <button type="button" class="button primary-button search-button" id="patient-search-button"><i class="fas fa-search"></i> Buscar</button>
+                    </div>
+                </div>
+
+                <div id="search-mode-geografica" class="search-mode" style="display: none;">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label for="provincia_select">Provincia</label>
+                            <select id="provincia_select">
+                                <option value="">Seleccione Provincia</option>
+                                <option value="Pichincha">Pichincha</option>
+                                <option value="Guayas">Guayas</option>
+                                <option value="Cotopaxi">Cotopaxi</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="ciudad_select">Ciudad / Cantón</label>
+                            <select id="ciudad_select">
+                                <option value="">Seleccione Ciudad/Cantón</option>
+                                <option value="Quito">Quito</option>
+                                <option value="Latacunga">Latacunga</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="sector_select">Sector / Comunidad</label>
+                            <select id="sector_select">
+                                <option value="">Seleccione Sector/Comunidad</option>
+                                <option value="ElCisne">El Cisne</option>
+                                <option value="SanJuan">San Juan</option>
+                            </select>
+                        </div>
+                        <button type="button" class="button primary-button" id="census-search-button"><i class="fas fa-users"></i> Buscar Censo</button>
+                    </div>
+                </div>
+                
+                <div class="search-result-message" id="search-historial-message"></div>
+            </div>
+
+            <div class="content-wrapper" id="patient-data-view" style="display:none;">
+                
+                <div class="patient-record-card card">
+                    <h2 class="section-header"><i class="fas fa-id-card-alt"></i> Ficha Actual (Última Actualización: 2025-10-15)</h2>
+                    
+                    <div class="patient-data-summary">
+                        <div class="summary-box">
+                            <h3 class="summary-title">Datos Personales</h3>
+                            <p><strong>Cédula:</strong> <span id="data-cedula">1705678901</span></p>
+                            <p><strong>Paciente:</strong> <span id="data-nombre">María Fernanda Guamán Loachamin</span></p>
+                            <p><strong>Fecha Nac.:</strong> 1970-03-21 (55 años)</p>
+                            <p><strong>Contacto:</strong> 0998765432</p>
+                            <p><strong>Dirección (Censo):</strong> Comunidad El Cisne, Sector central</p>
+                        </div>
+
+                        <div class="summary-box">
+                            <h3 class="summary-title">Historial Clínico Clave</h3>
+                            <p><strong>Enfermedades:</strong> Hipertensión, Diabetes Tipo 2</p>
+                            <p><strong>Alergias:</strong> Sí (Desconocida)</p>
+                            <p><strong>Medicación:</strong> Losartán (100mg/día)</p>
+                            <p><strong>Hábitos:</strong> Tabaquismo (No), Alcohol (Social)</p>
+                            <p><strong>Riesgo Ambiental:</strong> Pozo de Agua, Quema de Desechos</p>
+                        </div>
+
+                        <div class="summary-box vital-signs">
+                            <h3 class="summary-title">Últimos Signos Vitales (2025-10-15)</h3>
+                            <p><strong><i class="fas fa-weight"></i> Peso/Altura:</strong> 78 kg / 160 cm</p>
+                            <p><strong><i class="fas fa-tachometer-alt"></i> Presión:</strong> 145/95 mm/Hg (Elevada)</p>
+                            <p><strong><i class="fas fa-thermometer-half"></i> Temperatura:</strong> 37.0 °C</p>
+                            <p><strong><i class="fas fa-heartbeat"></i> F. Cardiaca:</strong> 85 lpm</p>
+                            <p><strong><i class="fas fa-tint"></i> Glicemia:</strong> 180 mg/dL (Alto)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-symptoms">
+                        <h3 class="summary-title"><i class="fas fa-comments"></i> Síntomas Reportados (Última Visita)</h3>
+                        <p>El paciente reporta dolor de cabeza frecuente y visión borrosa ocasional. Se encuentra con presión arterial elevada hoy. Se recomienda seguimiento urgente (Triage: Rojo).</p>
+                    </div>
+
+                    <div class="action-buttons view-action">
+                        <button class="button primary-button"><i class="fas fa-print"></i> Generar Ficha PDF</button>
+                        <button class="button secondary-button"><i class="fas fa-edit"></i> Editar Ficha Actual</button>
+                    </div>
+                </div>
+
+                <div class="chronology-card card">
+                    <h2 class="section-header"><i class="fas fa-clock"></i> Cronología de Visitas (Historial Completo)</h2>
+                    <ul class="visit-list">
+                        <li class="visit-item active">
+                            <span class="date">15/10/2025</span>
+                            <span class="status warning">Triage: Rojo</span>
+                        </li>
+                        <li class="visit-item">
+                            <span class="date">01/08/2025</span>
+                            <span class="status warning-yellow">Triage: Amarillo</span>
+                        </li>
+                        <li class="visit-item">
+                            <span class="date">10/05/2025</span>
+                            <span class="status success">Triage: Verde</span>
+                        </li>
+                        <li class="visit-item">
+                            <span class="date">20/01/2025</span>
+                            <span class="status neutral">Registro Inicial</span>
+                        </li>
+                    </ul>
+                    <div class="download-history">
+                        <a href="#"><i class="fas fa-file-download"></i> Descargar Historial Completo (.zip)</a>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // Función para cambiar el modo de búsqueda (Individual vs Geográfica)
+        function toggleSearchMode(mode) {
+            document.getElementById('search-mode-individual').style.display = 'none';
+            document.getElementById('search-mode-geografica').style.display = 'none';
+            document.getElementById(`search-mode-${mode}`).style.display = 'block';
+            document.getElementById('patient-data-view').style.display = 'none';
+            document.getElementById('search-historial-message').innerHTML = '';
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Colapso del Sidebar
+            const appContainer = document.getElementById('app-container');
+            const toggleButton = document.getElementById('toggle-sidebar');
+            const patientDataView = document.getElementById('patient-data-view');
+            
+            toggleButton.addEventListener('click', function() {
+                appContainer.classList.toggle('sidebar-collapsed');
+                const icon = this.querySelector('i');
+                if (appContainer.classList.contains('sidebar-collapsed')) {
+                    icon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+                } else {
+                    icon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+                }
+            });
+
+            // 2. Lógica de Búsqueda del Historial (Individual)
+            const searchButton = document.getElementById('patient-search-button');
+            const searchInput = document.getElementById('search_input');
+            const searchMessage = document.getElementById('search-historial-message');
+            
+            searchButton.addEventListener('click', () => {
+                const query = searchInput.value.trim().toLowerCase();
+                searchMessage.style.border = '1px solid var(--color-border-light)';
+                
+                if (query.length > 3) {
+                    if (query.includes('maria') || query.includes('1705678901')) {
+                        searchMessage.innerHTML = '<i class="fas fa-check-circle"></i> Paciente encontrado: María Fernanda Guamán.';
+                        searchMessage.style.backgroundColor = 'rgba(26, 188, 156, 0.1)';
+                        searchMessage.style.color = 'var(--color-health-green)';
+                        patientDataView.style.display = 'grid';
+                    } else {
+                        searchMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i> No se encontraron registros para la búsqueda: ' + query;
+                        searchMessage.style.backgroundColor = 'rgba(253, 236, 172, 0.8)';
+                        searchMessage.style.color = '#856404';
+                        patientDataView.style.display = 'none';
+                    }
+                } else {
+                    searchMessage.innerHTML = '<i class="fas fa-times-circle"></i> Ingrese al menos 4 caracteres para iniciar la búsqueda.';
+                    searchMessage.style.backgroundColor = 'rgba(218, 41, 28, 0.1)';
+                    searchMessage.style.color = 'var(--color-ecuador-red)';
+                    patientDataView.style.display = 'none';
+                }
+            });
+
+            // 3. Lógica de Búsqueda de Censo (Geográfica)
+            const censusSearchButton = document.getElementById('census-search-button');
+            censusSearchButton.addEventListener('click', () => {
+                const provincia = document.getElementById('provincia_select').value;
+                const sector = document.getElementById('sector_select').value;
+                
+                if (provincia && sector) {
+                    searchMessage.innerHTML = `<i class="fas fa-users"></i> Búsqueda Censo: **28 pacientes** encontrados en ${sector}, ${provincia}.`;
+                    searchMessage.style.backgroundColor = 'rgba(0, 119, 194, 0.1)';
+                    searchMessage.style.color = 'var(--color-primary-blue)';
+                    patientDataView.style.display = 'none'; // Se asume que el censo mostraría una tabla de resultados diferente
+                } else {
+                    searchMessage.innerHTML = '<i class="fas fa-times-circle"></i> Seleccione al menos Provincia y Sector para la búsqueda de censo.';
+                    searchMessage.style.backgroundColor = 'rgba(218, 41, 28, 0.1)';
+                    searchMessage.style.color = 'var(--color-ecuador-red)';
+                    patientDataView.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
