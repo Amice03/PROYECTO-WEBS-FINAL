@@ -32,5 +32,3 @@ Tecnologías utilizadas
 ⦁	Frameworks: React Native (para el modo offline)
 ⦁	Base de datos: SQLite (para almacenamiento local)
 ⦁	Otras herramientas: Node.js, Express.js (para la lógica del servidor cuando hay conexión)
-
-MICA TE AMO.
